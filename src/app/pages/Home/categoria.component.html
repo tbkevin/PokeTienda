@@ -1,0 +1,8 @@
+<div>
+<ul>
+    <li *ngFor="let categoria of categorias">
+        <button type="button" name = "seleccion" (click)="selectCategory($event)">{{categoria.name}}</button>
+    </li>
+    <h3></h3>
+</ul>
+</div>
