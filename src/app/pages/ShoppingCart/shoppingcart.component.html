@@ -1,0 +1,82 @@
+<div class="container">
+  <div *ngIf="shoppingCart.length > 0;else emptyBlock">
+    <div class="shoppingCart">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z1">
+
+        <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> Id </th>
+          <td mat-cell *matCellDef="let element"> {{element.product.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="img">
+          <th mat-header-cell *matHeaderCellDef>Img</th>
+          <td mat-cell *matCellDef="let element">
+            <img src="{{element.product.sprite}}" width="40" height="40">
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.product.name | titlecase}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="cost">
+          <th mat-header-cell *matHeaderCellDef> Cost($) </th>
+          <td mat-cell *matCellDef="let element"> {{element.product.cost | number}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef> Amount </th>
+          <td mat-cell *matCellDef="let element"> {{element.amount | number}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="total">
+          <th mat-header-cell *matHeaderCellDef> Total </th>
+          <td mat-cell *matCellDef="let element"> {{(element.amount * element.product.cost) | number}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="accion">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <a class="pointer" (click)="deleteElement(element)" style="color: #1f516f; margin-left: 50px"
+              matTooltip="Delete">
+              <mat-icon>delete</mat-icon>
+            </a>
+          </td>
+
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <div class="totalPrice">
+      <mat-toolbar>
+        <span class="example-spacer"></span>
+        <span>Total: {{totalPrice | number}} $</span>
+        <span class="example-spacer"></span>
+        <button mat-icon-button class="example-icon favorite-icon" (click)="makePayment()"
+          aria-label="Example icon-button with heart icon" matTooltip="Make payment">
+          <mat-icon>payments</mat-icon>
+        </button>
+      </mat-toolbar>
+    </div>
+
+  </div>
+  <div class="empty">
+    <ng-template #emptyBlock>
+      <p>
+        <mat-toolbar>
+          <span class="example-spacer"></span>
+          <span>There's no yet items in the shopping cart. Go Store!</span>
+          <span class="example-spacer"></span>
+        </mat-toolbar>
+      </p>
+    </ng-template>
+  </div>
+</div>

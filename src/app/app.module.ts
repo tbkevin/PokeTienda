@@ -9,19 +9,25 @@ import { CategoriaComponent } from './components/category/categoria.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedModule } from './shared/shared/shared.module';
+import { ShoppingcartComponent } from './components/shoppingcart/shoppingcart.component';
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     TiendaComponent,
     CategoriaComponent,
-    FooterComponent
+    FooterComponent,
+    ShoppingcartComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -8,6 +8,6 @@ export class AbstractWebService{
     }
 
     protected makeGet<T>(url:string,id?:string):Observable<T>{
-        return this.http.get<T>(url+`/${id === undefined? "":id}`);
+        return this.http.get<T>(url);
     }
 }

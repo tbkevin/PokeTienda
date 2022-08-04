@@ -1,3 +1,58 @@
-<div>
-    <app-categoria></app-categoria>
+<div class="container">
+  <app-categoria class="sidebar" (categoriaSeleccionada)="selectedCategory($event)"></app-categoria>
+  <div class="content">
+    <div [hidden]="!cargado">
+      <mat-form-field appearance="standard" class="formInput">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="" #filterInput>
+      </mat-form-field>
+    </div>
+    <table *ngIf="cargado" mat-table [dataSource]="dataSource" class="mat-elevation-z2">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Id </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="img">
+        <th mat-header-cell *matHeaderCellDef>Img</th>
+        <td mat-cell *matCellDef="let element">
+          <img src="{{element.sprite}}" width="40" height="40">
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name | titlecase}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="cost">
+        <th mat-header-cell *matHeaderCellDef> Cost($) </th>
+        <td mat-cell *matCellDef="let element"> {{element.cost | number}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef> Amount </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-form-field appearance="fill" style="width: 80px;margin-top: 10px;">
+            <input matInput type="number" min="1" value="1" #inputAmount>
+          </mat-form-field>
+          <a class="pointer" (click)="cart(element,inputAmount)" style="color: #1f516f; margin-left: 50px"
+            matTooltip="Buy">
+            <mat-icon>paid</mat-icon>
+          </a>
+        </td>
+
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div [hidden]="!cargado">
+      <mat-paginator dis [pageSizeOptions]="[10, 20]" showFirstLastButtons style="margin-right: 100px;"
+        aria-label="Select page of periodic elements">
+      </mat-paginator>
+    </div>
+  </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { APIREST } from '../../services/apiREST';
 import { Categoria } from '../../classes/category/categoria';
 import { DataManagment } from "../../services/dataManagment";
@@ -10,8 +10,8 @@ import { Observable,of, take } from 'rxjs';
   styleUrls: ['./categoria.component.css']
 })
 export class CategoriaComponent implements OnInit {
-  public categoriaSeleccionada?:Categoria;
-  public categorias?:Categoria[];
+  @Output() categoriaSeleccionada = new EventEmitter<Categoria>();
+  categorias?:Categoria[];
   
 
   constructor(private apirest:APIREST,private dataManagment:DataManagment) { }
@@ -22,13 +22,13 @@ export class CategoriaComponent implements OnInit {
 
   async getCategorias(){  
     this.categorias = await this.dataManagment.getCategorias();
-    this.categoriaSeleccionada = this.categorias[0];
+    this.categoriaSeleccionada.emit(this.categorias[0]);
   }
 
   selectCategory(event:any){
-    this.categoriaSeleccionada = event.target.textContent.trim();
-    console.log(this.categoriaSeleccionada);
-    
+    let categorianombre = event.target.textContent.trim().toLowerCase();
+    let category = this.categorias?.find(c => c.name ===categorianombre);
+    this.categoriaSeleccionada.emit(category);
   }
 }
 
